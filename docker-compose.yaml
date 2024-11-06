@@ -31,3 +31,33 @@ services:
       bash -c "airflow db upgrade &&
                airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com &&
                airflow standalone"
+    
+  redis:
+    image: redis:6
+    container_name: redash_redis
+
+  redash:
+    image: redash/redash:latest
+    container_name: redash_server
+    environment:
+      REDASH_DATABASE_URL: "postgresql://crypto:1q2w3e4r@db:5432/redash"
+      REDASH_REDIS_URL: "redis://redis:6379/0"
+    ports:
+      - "8081:5000"
+    command: server
+
+  scheduler:
+    image: redash/redash:latest
+    container_name: redash_scheduler
+    environment:
+      REDASH_DATABASE_URL: "postgresql://crypto:1q2w3e4r@db:5432/redash"
+      REDASH_REDIS_URL: "redis://redis:6379/0"
+    command: scheduler
+
+  worker:
+    image: redash/redash:latest
+    container_name: redash_worker
+    environment:
+      REDASH_DATABASE_URL: "postgresql://crypto:1q2w3e4r@db:5432/redash"
+      REDASH_REDIS_URL: "redis://redis:6379/0"
+    command: worker
