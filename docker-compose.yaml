@@ -16,7 +16,7 @@ services:
       - "5432:5432"
 
   airflow:
-    image: duynguyenngoc/airflow:slim-2.10.2-python3.12-v1.0.1
+    image: duynguyenngoc/airflow:crypto-monitoring
     environment:
       AIRFLOW__CORE__EXECUTOR: SequentialExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://crypto:1q2w3e4r@db/airflow
