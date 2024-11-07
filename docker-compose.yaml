@@ -28,9 +28,7 @@ services:
       - ./airflow/logs:/opt/airflow/logs
       - ./airflow/plugins:/opt/airflow/plugins
     command: >
-      bash -c "airflow db upgrade &&
-               airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com &&
-               airflow standalone"
+      bash -c "airflow standalone"
     
   redis:
     image: redis:6
